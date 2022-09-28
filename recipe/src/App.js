@@ -17,6 +17,7 @@ function App() {
     const data = await response.json();
     console.log(data);
     setRecipes(data.hits);
+    
   }
   return (
     <div className='App'>
