@@ -1,5 +1,8 @@
 import {useEffect, useState} from 'react';
+
 import './App.css';
+import './styles/title.scss';
+import './styles/recipes-list.scss';
 import Recipe from './components/Recipe';
 
 function App() {
@@ -29,14 +32,16 @@ function App() {
   }
   return (
     <div className='App'>
-      <h1>Recipes</h1>
+      <h1 className='title'>Recipes</h1>
       <form onSubmit={handleSubmit} className='search-form'>
         <input type="text" className="search-bar" onChange={handleChange} />
         <button type="submit" className='search-button'>Search</button>
       </form>
-      {recipes.map( recept => (
-        <Recipe key={Math.random()} title={recept.recipe.label} calories={Math.ceil(recept.recipe.calories)} image={recept.recipe.image}/>
-      ))}
+      <div className='recipes-list'>
+        {recipes.map( recept => (
+          <Recipe key={Math.random()} title={recept.recipe.label} calories={Math.ceil(recept.recipe.calories)} image={recept.recipe.image}/>
+        ))}
+      </div>
     </div>
   );
 }
