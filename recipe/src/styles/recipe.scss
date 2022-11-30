@@ -1,0 +1,35 @@
+.recipe {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    border: 3px solid #000;
+    width: 80%;
+    background-color: #DBC8AC;
+    .image {
+        width: 40%;
+    }
+    img {
+        border-radius: 50%;
+        height: 100px;
+        margin: 10px;
+    }
+    h1 {
+        font-size: 1rem;
+    }
+    .recipe-properties {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60%;
+        line-height: 1.5rem;
+    }
+    button {
+        width: 50%;
+        background-color: #DD5353;
+        color: white;
+        font-size: 0.9rem;
+        border: 3px solid black;
+        border-radius: 10px;
+    }
+}
