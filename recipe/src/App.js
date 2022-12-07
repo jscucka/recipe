@@ -3,23 +3,35 @@ import {useEffect, useState} from 'react';
 import './App.css';
 import './styles/title.scss';
 import './styles/recipes-list.scss';
-import Recipe from './components/Recipe';
-
+import Spinner from './components/Spinner';
+import RecipesList from './components/RecipesList';
 function App() {
   const APP_ID = "0179ca3b";
   const APP_KEY = "01a1bedb90e18f0bc38519153836c6d7";
 
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("chicken");
-  const [query, setQuery] = useState()
+  const [query, setQuery] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(  () => {
     getRecipes();
   }, [query]);
   const getRecipes = async () => {
-    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=${APP_ID}&app_key=${APP_KEY}`)
-    const data = await response.json();
-    console.log(data);
-    setRecipes(data.hits);
+    setIsLoading(true);
+    try {
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${search}&app_id=${APP_ID}&app_key=${APP_KEY}`)
+      const data = await response.json();
+      if(data.count === 0) {
+        //TODO:: Return message when there is not recipes
+      }
+      else {
+        setRecipes(data.hits);
+      }
+      
+    } catch (err) {
+      console.log(err)
+    }
+    setIsLoading(false);
   }
 
   const handleChange = (e) => {
@@ -37,11 +49,8 @@ function App() {
         <input type="text" className="search-bar" onChange={handleChange} />
         <button type="submit" className='search-button'>Search</button>
       </form>
-      <div className='recipes-list'>
-        {recipes.map( recept => (
-          <Recipe key={Math.random()} title={recept.recipe.label} calories={Math.ceil(recept.recipe.calories)} image={recept.recipe.image}/>
-        ))}
-      </div>
+      {isLoading ? <Spinner /> : <RecipesList recipe={recipes}/>}
+      
     </div>
   );
 }
